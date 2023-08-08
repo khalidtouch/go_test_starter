@@ -8,41 +8,65 @@ on:
 
 
 jobs: 
-  build: 
+  Explore-Github-Actions:
     runs-on: ubuntu-latest 
 
-    env: 
-      DB_DATABASE: go_mysql_suite_test 
-      DB_USER: root 
-      DB_PASSWORD: root 
-
-
     steps: 
-      - name: "Mysql Setup"
-        run: | 
-          sudo /etc/mysql start 
-          mysql -e 'CREATE DATABASE ${{ env.DB_DATABASE }};' -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }}
+      - run: echo "The job was automatically triggered by a ${{github.event_name}} event."
+
+      - run: echo "This job is now running on a ${{runner.os}} server hosted by Github!"
+
+      - run: echo "The name of your branch is ${{github.ref}} and your repository is ${{github.repository}}."
+
+      - name: Check out repository code 
+        uses: actions/checkout@v3
+      - run: echo "The ${{github.repository}} repository has been cloned to the runner."
+      - run: echo "The workflow is now ready to test your code on the runner."
+
+      - name: List files in the repository 
+      - run: |
+          ls ${{github.workspace}}
+        
+      - run: echo "This job's status is ${{job.status}}."
+
+
+
+# jobs: 
+#   build: 
+#     runs-on: ubuntu-latest 
+
+#     env: 
+#       DB_DATABASE: go_mysql_suite_test 
+#       DB_USER: root 
+#       DB_PASSWORD: root 
+
+
+#     steps: 
+#       - name: "Mysql Setup"
+#         run: | 
+#           sudo /etc/mysql start 
+#           mysql -e 'CREATE DATABASE ${{ env.DB_DATABASE }};' -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }}
 
         
-      - name: "Checkout Code"
-        uses: actions/checkout@v2 
+#       - name: "Checkout Code"
+#         uses: actions/checkout@v2 
 
-      - name: "Setup Go"
-        uses: actions/setup-go@v2
-        with: 
-          go-version: 1.20 
-
-
-      - name: "Test"
-        run: go test -v ./tests
+#       - name: "Setup Go"
+#         uses: actions/setup-go@v2
+#         with: 
+#           go-version: 1.20 
 
 
-      - name: "Build"
-        run: go build -o ./bin/server server.go 
+#       - name: "Test"
+#         run: go test -v ./tests
 
 
-      - name: "Artifact"
-        uses: actions/upload-artifact@v2 
-        with:
-          name: server 
-          path: bin/server
+#       - name: "Build"
+#         run: go build -o ./bin/server server.go 
+
+
+#       - name: "Artifact"
+#         uses: actions/upload-artifact@v2 
+#         with:
+#           name: server 
+#           path: bin/server
