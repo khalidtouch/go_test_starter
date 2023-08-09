@@ -41,6 +41,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: "${{ secrets.IMAGE_NAME }}.tar"
           target: /root/containers/
+          timeout: 120s
 
       - name: Start new container using the new image
         uses: appleboy/ssh-action@master
